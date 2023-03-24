@@ -1,0 +1,11 @@
+{
+    "author": "bronson113",
+    "description": "Mindblown by ioccc? How can someone write programs like this... Anyway, try open this padlock :)",
+    "difficulty": "Easy",
+    "flag": "bctf{qu1n3_1s_4ll_ab0ut_r3p371t10n_4nD_m4n1pul4710n_OwO_OuO_UwU}",
+    "name": "padlock",
+    "provides": [
+        "dist/quine.c"
+    ],
+    "type": "rev"
+}

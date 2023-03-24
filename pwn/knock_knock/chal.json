@@ -1,0 +1,17 @@
+{
+    "author": "athryx",
+    "description": "Who's There? Its my blazing fast os written in rust🚀🚀🚀. Hope I remembered to lock the door so you can't crash my party.",
+    "difficulty": "Medium",
+    "flag": "bctf{i_f0Rg0r_1dt_h4$_cpl_$3tt1nGs_9f33526563340a912e83}",
+    "name": "knock_knock",
+    "ports": [
+        37777
+    ],
+    "provides": [
+        "dist/knock_knock_dist.tar.gz"
+    ],
+    "remote": [
+        "cd deploy && docker-compose up knock_knock --build"
+    ],
+    "type": "pwn"
+}

@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+    {name}:
+        container_name: {name}
+        build:
+            dockerfile: ./deploy/Dockerfile
+            context: ../
+        logging:
+            driver: "json-file"
+        ports:
+            - "{port}:1337"
+    {name}-build:
+        container_name: {name}-build
+        build:
+            dockerfile: ./deploy/Dockerfile-build
+            context: ../
+        logging:
+            driver: "json-file"
+        volumes:
+            - build:/home/{name}/build
+volumes:
+    build:
+        name: {name}-build
+        driver: local
+        driver_opts:
+            type: none
+            device: {dist_path}
+            o: bind

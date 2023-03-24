@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+    php.galf:
+        container_name: php.galf
+        build:
+            dockerfile: ./deploy/Dockerfile
+            context: ../
+        logging:
+            driver: "json-file"
+        ports:
+            - "1237:80"

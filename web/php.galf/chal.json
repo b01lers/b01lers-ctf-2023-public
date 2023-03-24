@@ -1,0 +1,17 @@
+{
+    "author": "CygnusX26",
+    "description": "found one of my old projects, but I can't seem to figure out how it works... tried to update it but that might have backfired :(",
+    "difficulty": "Medium",
+    "flag": "bctf{Nuf_S1_Zgn1ht_gn1k0vn1}",
+    "name": "php.galf",
+    "ports": [
+        1237
+    ],
+    "provides": [
+        "dist/galf"
+    ],
+    "remote": [
+        "cd deploy && docker-compose up --build"
+    ],
+    "type": "web"
+}

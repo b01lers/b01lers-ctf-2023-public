@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+    warmup:
+        container_name: warmup
+        build:
+            dockerfile: ./deploy/Dockerfile
+            context: ../
+        logging:
+            driver: "json-file"
+        ports:
+            - "1238:5000"
+
+            

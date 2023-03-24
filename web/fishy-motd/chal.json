@@ -1,0 +1,17 @@
+{
+    "author": "0xMihir",
+    "description": "I just created a tool to deploy messages to server admins in our company. They *love* clicking on them too!",
+    "difficulty": "Hard",
+    "flag": "bctf{ph15h1ng_reel_w1th_0n3_e}",
+    "name": "fishy-motd",
+    "ports": [
+        1239
+    ],
+    "provides": [
+        "dist/fishy-motd"
+    ],
+    "remote": [
+        "cd deploy && docker-compose up --build"
+    ],
+    "type": "web"
+}

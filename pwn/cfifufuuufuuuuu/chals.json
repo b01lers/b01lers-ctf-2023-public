@@ -1,0 +1,16 @@
+{
+    "author": "anton00b",
+    "description": "A tiny program, protected by some Python code. The flag is in: ./flag.txt",
+    "difficulty": "Medium",
+    "flag": "bctf{a&X98k_FU!}",
+    "name": "cfifufuuufuuuuu",
+    "ports": [
+        3071
+    ],
+    "provides": [
+        "dist/loder.pyc",
+        "dist/s",
+    ],
+    "remote": null,
+    "type": "pwn"
+}

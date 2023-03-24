@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+    chicago:
+        container_name: chicago
+        build:
+            dockerfile: ./deploy/Dockerfile
+            context: ../
+        logging:
+            driver: "json-file"
+        ports:
+            - "9178:1337"
+    chicago-build:
+        container_name: chicago-build
+        build:
+            dockerfile: ./deploy/Dockerfile-build
+            context: ../
+        logging:
+            driver: "json-file"
+        volumes:
+            - build:/home/chicago/build
+volumes:
+    build:
+        name: chicago-build
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/user/ctf/dev/b01lers-ctf-2023/rev/chicago/dist
+            o: bind

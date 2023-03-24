@@ -1,0 +1,13 @@
+apiVersion: kctf.dev/v1
+kind: Challenge
+metadata:
+  name: abhs
+spec:
+  deployed: true
+  powDifficultySeconds: 0
+  network:
+    public: true
+  healthcheck:
+    # TIP: disable the healthcheck during development
+    enabled: false
+  image: eu.gcr.io/bctf23/abhs-challenge:f2fa090ac4892d539ad96b63df6087245fb9cd148a66db495e0ea28ba87bf7a9

@@ -1,0 +1,14 @@
+apiVersion: kctf.dev/v1
+kind: Challenge
+metadata:
+  name: noah
+spec:
+  deployed: true
+  powDifficultySeconds: 0
+  network:
+    public: true
+  healthcheck:
+    # TIP: disable the healthcheck during development
+    enabled: false
+    image: eu.gcr.io/bctf23/noah-healthcheck:e98054bc67b6caeaa74be3742e7230e48ddf3aae97e40f0e43e871c9642143ba
+  image: eu.gcr.io/bctf23/noah-challenge:9ee385cad37cd1dee1e534d861603420cb43c77a6fcee463768fd32e7dd3018a

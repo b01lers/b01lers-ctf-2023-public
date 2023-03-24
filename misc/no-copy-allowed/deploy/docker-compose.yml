@@ -1,0 +1,8 @@
+version: "3"
+services:
+  no-copy-allowed:
+    build:
+        dockerfile: ./deploy/Dockerfile
+        context: ../
+    ports:
+      - "4567:80"

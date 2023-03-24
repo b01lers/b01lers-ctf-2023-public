@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+    knock_knock:
+        container_name: knock_knock
+        build:
+            dockerfile: ./deploy/Dockerfile
+            context: ../
+        logging:
+            driver: "json-file"
+        ports:
+            - "37777:1337"

@@ -1,0 +1,11 @@
+{
+    "author": "0xMihir",
+    "description": "I'm trying to crack the password for this safe, but I can't seem to figure it out!",
+    "difficulty": "Medium",
+    "flag": "bctf{B5D2A160B062538BC55D}",
+    "name": "safe",
+    "provides": [
+        "dist/safe"
+    ],
+    "type": "rev"
+}

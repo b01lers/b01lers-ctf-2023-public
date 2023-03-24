@@ -1,0 +1,14 @@
+apiVersion: kctf.dev/v1
+kind: Challenge
+metadata:
+  name: knock_knock
+spec:
+  deployed: true
+  powDifficultySeconds: 0
+  network:
+    public: true
+  healthcheck:
+    # TIP: disable the healthcheck during development
+    enabled: false
+    image: eu.gcr.io/bctf23/ezclass-healthcheck:e98054bc67b6caeaa74be3742e7230e48ddf3aae97e40f0e43e871c9642143ba
+  image: eu.gcr.io/bctf23/ezclass-challenge:9e2e956313aaf25b81838dc981758e50d56454f3dc99d35fc17f1bb1dafa8805

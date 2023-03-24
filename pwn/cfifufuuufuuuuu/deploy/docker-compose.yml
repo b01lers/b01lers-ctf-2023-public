@@ -1,0 +1,11 @@
+version: "2.2"
+services:
+    cfifufuuufuuuuu:
+        container_name: cfifufuuufuuuuu
+        build:
+            dockerfile: ./deploy/Dockerfile
+            context: ../
+        logging:
+            driver: "json-file"
+        ports:
+            - "3071:1337"

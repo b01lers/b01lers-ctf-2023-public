@@ -1,0 +1,17 @@
+{
+    "author": "enigcryptist",
+    "description": "I thought I'd write a poem to commemorate the day this CTF went live :)\nFlag format: bctf{...}",
+    "difficulty": "Easy",
+    "flag": "bctf{fl4m1n9_c1rcl3_0f_l1f3}",
+    "name": "poeticrypto",
+    "ports": [
+        1337
+    ],
+    "provides": [
+        "dist/poem.txt",
+        "src/algo.py",
+        "dist/cipher.txt"
+    ],
+    "remote": null,
+    "type": "crypto"
+}

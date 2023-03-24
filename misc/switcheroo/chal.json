@@ -1,0 +1,8 @@
+{
+    "author": "bronson113",
+    "description": "It's a busy weekend, tens of CTF happening at the same time :)\nIf there are extra time, why not checkout https://wolvctf.io !\nBtw, take this as a gift: d2N0ZntNNDF6M180bmRfQmx1M30K",
+    "difficulty": "Easy",
+    "flag": "bctf{h3110_w0r1d_g1f7_fr0m_7h3_b01ler_s1d3}",
+    "name": "switcheroo",
+    "type": "misc"
+}

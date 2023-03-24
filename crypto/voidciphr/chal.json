@@ -1,0 +1,15 @@
+{
+    "author": "enigcryptist",
+    "description": "For obfuscation, I had a void suck away part of my \ud83d\udd11\nFlag format: bctf{...}",
+    "difficulty": "Easy",
+    "flag": "bctf{XOUTEBYRM}",
+    "name": "voidciphr",
+    "ports": [
+        1337
+    ],
+    "provides": [
+        "dist/cipher.txt"
+    ],
+    "remote": null,
+    "type": "crypto"
+}

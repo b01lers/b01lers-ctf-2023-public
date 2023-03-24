@@ -1,0 +1,8 @@
+#ifndef CONSTANTS_H
+#  define CONSTANTS_H
+#define ROWS_DEFAULT 0x32
+#define COLS_DEFAULT 0x18
+#define MAPSIZE (ROWS_DEFAULT * COLS_DEFAULT)
+#define NSTACK 100
+
+#endif

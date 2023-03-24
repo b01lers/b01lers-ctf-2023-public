@@ -1,0 +1,14 @@
+apiVersion: kctf.dev/v1
+kind: Challenge
+metadata:
+  name: babynoah
+spec:
+  deployed: true
+  powDifficultySeconds: 0
+  network:
+    public: true
+  healthcheck:
+    # TIP: disable the healthcheck during development
+    enabled: false
+    image: eu.gcr.io/bctf23/noah-healthcheck:e98054bc67b6caeaa74be3742e7230e48ddf3aae97e40f0e43e871c9642143ba
+  image: kind/challenge:4f9226d0c63d1bd4094ab9bb9c22b93a0d811f85e24bb251b3196f4c66108dd4

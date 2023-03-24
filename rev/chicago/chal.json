@@ -1,0 +1,17 @@
+{
+    "author": "akhbaar",
+    "description": "Keygenme...sort of",
+    "difficulty": "Medium",
+    "flag": "bctf{s7r1pp3d_ru57_15_a_p41n_1n_th3_n3ck}",
+    "name": "chicago",
+    "ports": [
+        9178
+    ],
+    "provides": [
+        "dist/chicago"
+    ],
+    "remote": [
+        "cd deploy && docker-compose --project_name chal --force-recreate --build up"
+    ],
+    "type": "rev"
+}

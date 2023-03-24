@@ -1,0 +1,16 @@
+{
+    "author": "enigcryptist",
+    "description": "Maybe if I weave the flag into a tight enough space, you won't be able to find it...\nFlag format: bctf{...}",
+    "difficulty": "Easy",
+    "flag": "bctf{k33p_y0ur_h4sh3s_cl0s3}",
+    "name": "yarn_hashing",
+    "ports": [
+        1337
+    ],
+    "provides": [
+        "src/yarn_hash.py",
+        "dist/hash.txt"
+    ],
+    "remote": null,
+    "type": "misc"
+}

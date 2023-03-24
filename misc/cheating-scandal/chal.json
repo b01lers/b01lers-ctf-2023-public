@@ -1,0 +1,8 @@
+{
+    "author": "CygnusX,Bilbin,Deltaforce,Colbyjack,Bilbin",
+    "description": "Purdue Pete confessed that he cheated on his cs homework. He said He doesnt know how he got the cheat code. All that Pete remembers is a weird file with FROM experienceg48/cheat:latest at the top. Can you help us get the contact information of the perpetrator?",
+    "difficulty": "Medium",
+    "flag": "bctf{t0p_G_4lyf3@c0rv1x.c0m_123_456_7890}",
+    "name": "cheating-scandal",
+    "type": "misc"
+}

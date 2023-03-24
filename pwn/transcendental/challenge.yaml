@@ -1,0 +1,14 @@
+apiVersion: kctf.dev/v1
+kind: Challenge
+metadata:
+  name: transcendental
+spec:
+  deployed: true
+  powDifficultySeconds: 0
+  network:
+    public: true
+  healthcheck:
+    # TIP: disable the healthcheck during development
+    enabled: false
+    image: eu.gcr.io/bctf23/transcendental-healthcheck:e75dbe694f8611598c6c26dc087407714794a96ac5b111bf06d9fe00d2330190
+  image: eu.gcr.io/bctf23/transcendental-challenge:3daed2260f23190dc0bb690f997e504cf1fa9133ae03669a767dba82e263c2bb

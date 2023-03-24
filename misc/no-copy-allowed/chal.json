@@ -1,0 +1,15 @@
+{
+    "author": "Dx.",
+    "description": "keep doing this until you get bored.",
+    "difficulty": "Easy",
+    "flag": "bctf{l1gatur3_4bus3_15_fun_X0UOBDvfRkKa99fEVloY0iYuaxzS9hj4rIFXlA3B}",
+    "name": "no-copy-allowed",
+    "ports": [
+        4567
+    ],
+    "provides": [],
+    "remote": [
+        "cd deploy && docker-compose up --build"
+    ],
+    "type": "misc"
+}
