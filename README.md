@@ -2,7 +2,7 @@
 
 A template repository for a CTF competition. This is a description of the CTF event.
 
-[CTFTime Link](https://ctftime.org/event/<this-ctfs-page>)
+[CTFTime Link](https://ctftime.org/event/1875)
 
 # Structure
 
