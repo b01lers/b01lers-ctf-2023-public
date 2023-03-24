@@ -38,7 +38,7 @@ An alternate approach which works (and, in retrospect, makes for a much better w
 
 0. Initialize the first candidate as the middle dot `cdot = yarn.n_winds // 2` in the 1D window `[a, b] = [0, yarn.n_winds-1]`, which should be the first dot to the right of the middle "bridge" connecting the left-right subcurves. Smallest dot in lower-left, largest in lower-right.
 1. Then compute `(cx, cy) = fold(cdot)` (i.e. `hash_to_curve` with an integer input) and recursively compare with the hash of the flag `(x, y)`:
-2. **Base case**: If `(cx = x) and (cy = y)`, then convert `cdot` into a string for the flag. The fact that the integer representation of the flag was taken modulu `n_winds` turns out to not matter here since the flag is small: it was just there for general correctness.
+2. **Base case**: If `(cx = x) and (cy = y)`, then convert `cdot` into a string for the flag. The fact that the integer representation of the flag was taken modulo `n_winds` turns out to not matter here since the flag is small: it was just there for general correctness.
 3. **Upper-right**: Else if `(cx >= x) and (cy >= y)`,  reduce the 1D window to `[cdot, cdot + quad - 1]`. Set `cdot = += quad // 2`, and repeat.
 4. **Upper-left**: Else if `(cx < x) and (cy >= y)`,  reduce the 1D window to `[cdot - quad, cdot - 1]`. Set `cdot = -= quad // 2`, and repeat.
 5. **Lower-right**: Else if `(cx >= x) and (cy < y)`, reduce the 1D window to `[cdot + quad, b]` and set `cdot = (cdot + quad) + quad // 2`. Rotate clockwise $90^\circ$, flip symmetrically parallel to $y$-axis (i.e. 1D goes opposite direction), and repeat.
@@ -60,7 +60,7 @@ I'm unsure whether it's possible to perform a clever hillclimb / nearest-neighbo
 
 However, I suspect this won't work because, while hashes such as these are locality preserving from input to output (here, 1D to 2D), the inverse (i.e. 2D to 1D) won't always hold. For example, looking at the `ply=5` example above, suppose the hash is $H(\texttt{FLAG}) = (x^\ast, y^\ast) = (16, 0)$. After performing naive hillclimb (i.e. minimal 2D distance as objective function via gradient descent) an attacker might find a "good" input $\hat{d}$ such that e.g. $H(\hat{d}) = (15, 0)$ with $d_2((15, 0), (x^\ast, y^\ast)) = 1$. Despite this small distance between points, the 1D integers $\hat{d}$ and $\texttt{FLAG}$ are extremely far from each other. 
 
-So, how do you also encode in the objective function that the candidate dot should also be close when you don't know the integer flag to begin with...? Could you penalize 1D solutions with heigh weights near large "jumps" in 2D without needing to invert 2D points? Use Hamming distance on Gray codes of each point on the curve somehow?
+So, how do you also encode in the objective function that the candidate dot should also be close when you don't know the integer flag to begin with...? Could you penalize 1D solutions to avoid being nearby large "jumps" in 2D? Use Hamming distance on Gray codes of each point on the curve somehow?
 
 ## Additional Resources
 - **Hilbert Curve** ([Wikipedia](https://en.wikipedia.org/wiki/Hilbert_curve)): Contains a lot of information about a very common **NON-cryptographic** space-filling curve, as well as the base C code I used as a reference implementation.
