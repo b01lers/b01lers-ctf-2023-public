@@ -24,7 +24,7 @@ def getWeights(t):
    stamp = makeStamp(t)
    return sorted(cache, key = lambda v: abs(math.sin(math.pi * stamp / v)))
 
-def solveForTime(t0, credits):
+def solveForTime(t0, credits, pgoal, qgoal):
    i = 0
    dt = 0.
    good = []
@@ -33,7 +33,7 @@ def solveForTime(t0, credits):
       t = t0 + datetime.timedelta(seconds = dt)
       weights = getWeights(t)
       p, q = weights[:2]
-      if (p,q) == (3,7) and goal == None: goal = t
+      if (p,q) == (pgoal, qgoal) and goal == None: goal = t
       c = sum(weights[-29:])
       if c == credits:  good.append(t)
       if dt > 0:   dt = -dt
@@ -47,7 +47,7 @@ def solveForTime(t0, credits):
 
 def connect():
    #r = process(["python3", "chal.py"])
-   r = remote("127.0.0.1", 9104)
+   r = remote("majestic.bctf23-codelab.kctf.cloud", 1337)
    in1 = r.recvuntil(b">").strip().split()
    #print(f"# {in1}")
    credits = int( in1[-3] )
@@ -55,15 +55,15 @@ def connect():
 
 
 # get ctxts for p,q = 3,7 in one connection
-def collectOneBatch(t0):
+def collectOneBatch(t0, pgoal, qgoal):
 
    results = []
 
    # connect
    r, credits = connect()
 
-   # solve for possible timestamps and suitable timestamp for p,q = 3,7
-   times, goal = solveForTime(t0, credits)
+   # solve for possible timestamps and suitable timestamp for p,q = pgoal,qgoal
+   times, goal = solveForTime(t0, credits, pgoal, qgoal)
    print(f"#TIMES: {[ str(t) for t in times]}")
    print(f"#GOAL: {goal}")
 
@@ -71,7 +71,7 @@ def collectOneBatch(t0):
       print("#->NO GOAL")
       return results
 
-   MINGAP = 2.0
+   MINGAP = 2.0  # super conservative!
    if len(times) == 0 or (len(times) > 1 and abs( (times[0] - times[1]).total_seconds() ) < MINGAP):
       print("#->TIMES BAD/RISKY")
       return results
@@ -103,18 +103,19 @@ def collectOneBatch(t0):
 
 
 # get all ctxts we need through multiple connections
-def collectAllCtxts(Ntot, fname):
+def collectAllCtxts(Ntot, pgoal, qgoal, fname):
    n, round = 0, 0
    ctxts = []
-   f = open(fname, "w");
+   f = open(fname, "w")   if fname   else   None
    while n < Ntot:
       round += 1
       t0 = datetime.datetime.utcnow()
       print(f"#ROUND {round}: {t0}")
 
-      ctxtBatch = collectOneBatch(t0)
-      for c in ctxtBatch:  f.write(c + "\n")
-      f.flush()
+      ctxtBatch = collectOneBatch(t0, pgoal, qgoal)
+      if f: 
+         for c in ctxtBatch:  f.write(c + "\n")
+         f.flush()
 
       ctxts += ctxtBatch
       n += len(ctxtBatch)
@@ -128,15 +129,17 @@ context.log_level = 'ERROR'
 
 # read params
 
-Ntot = int(sys.argv[1])    # if Ntot <= 0 then use the file as is, do not write it
-ctxtFile = sys.argv[2]
-freqFile = sys.argv[3]
+Ntot = int(sys.argv[1])    # if Ntot <= 0 then use the ctxt file as is, do no data collection
+pgoal = int(sys.argv[2])
+qgoal = int(sys.argv[3])
+freqFile = sys.argv[4]
+ctxtFile = sys.argv[5]  if len(sys.argv) > 5   else   None
 
 #####
 # get flag encryptions
 #####
 
-if Ntot > 0:  ctxts = collectAllCtxts(Ntot, ctxtFile)
+if Ntot > 0:  ctxts = collectAllCtxts(Ntot, pgoal, qgoal, ctxtFile)
 else:  ctxts = open(ctxtFile, "r").read().strip().split("\n")
 
 #####

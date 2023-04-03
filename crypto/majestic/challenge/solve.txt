@@ -1,0 +1,83 @@
+Magestic Lop writeup (by dm)
+============================
+
+I wanted some crypto with real numbers, so this was a system based on the logistic map "f(z) = 
+K z (1 - z)", which is chaotic when K is close enough to 4 (keyspace for K was 32 bits, mapped 
+to about [3.95,3.99]). Each ptxt character is encrypted separately - for each input byte 0 <= 
+B < 128, we start from some z values chosen equidistantly and then iterate the map (this is 
+the g() function). We also slap on similarly obtained results for B^0xbc (which falls in [128, 
+255]), so for each ptxt byte we get 2 bytes of ctxt. There is some mild obfuscation in the 
+keygen code that ensures that the map gives unique results for all bytes 0-127 (this was a 
+remnant of an earlier design that would have allowed for non-invertible "encryptions" with a 
+low bound of 2 or 4 on degeneracy).
+
+Originally I planned to have millions of rounds but that turned out to be i) rather slow for 
+encryption, and ii) also way too good :P There was simply no reasonable advantage in 
+1-character and 2-character frequencies, everything looked the same irrespective of input. 
+Encrypting just a handful of bits at a time (so that you could exploit correlations) would 
+have just turned this into a substitution challenge, so for a vulnerability I gave you a way 
+instead to drastically reduce the number of rounds. Low rounds also make diffusion weak 
+(sufficiently nearby keys give identical results), so a side-effect was that effective 
+keyspace shrank way below 32 bits - you could bruteforce keys reasonably well with a spacing 
+of 1e-5 instead of 1e-11 in keygen function. As partial compensation, I decided on double 
+encryption, one with key A and rounds p, followed by key B and rounds q. The design goal was 
+that O(1k-10k) independent encryptions should be sufficient to break it using maximum 
+likelihood on 1-char frequencies. There was unfortunately not enough time to tune the 
+challenge properly (e.g., O(4k)^2 possibilities for A,B were still searchable) - but at least 
+for small p+q = ~10 the challenge was doable if you had ~500 flag encryptions.
+
+The last step was giving you a way to control the number of rounds, p & q. The motto of the 
+challenge is 'no discrete math' but I needed integers, so it was natural to smuggle in 
+divisibility via the roots of a sine function. To provide some exploitable randomness, system 
+time in UTC with milliseconds precision was converted to an integer tstamp and the generated 
+p,q had to be among its divisors, in order to make sin(pi * tstamp / Nrounds) zero or close 
+to zero. For simplicity and also efficiency, p & q were restricted to a pool of primes up to 
+1000; and for maximal variation from connection to connection, milliseconds were used for most 
+significant digits of the integer tstamp, while the year - 2023 - came last. The last digit is 
+then 3, so neither 2 nor 5 rounds was possible, at least in principle - so in an ideal world 
+the best one can do is p,q = 3,7 or 7,3. I did overlook, however, that the tstamp I came up 
+with is huge, somewhat bigger than the 52-bit mantissa in double precision floating point. So 
+results for sin(pi*x) are insensitive to lowest bits of x :) - making even p, q = 3, 2 possible. 
+This simplified the problem for most of you, I bet.
+
+The timestamp is partially leaked by the number of starting credits, through which you can 
+infer its precise value (you can just search a window near your own UTC system time). A 
+viable/The intended solver strategy is then this:
+
+  i) connect, infer the precise timestamp from the credits
+
+  ii) add time to generate a p,q value that gives you enough advantage
+      -> if you need more than +-5 secs, just repeat (getting p,q = 3,7 typically required 0-20 secs) 
+
+  iii) generate as many ctxt encryptions as you can 
+
+  iv) goto i) until you have enough ctxts 
+
+  v) build frequency tables for the g() function from the ctxts at each flag char position 
+
+  vi) match frequencies against expectation for each character in your alphabet (say, ASCII 33-127),
+      and pick the solution according to maximum likelihood
+
+
+For part vi), you need precomputation based on a reasonably large number of encryptions. Best 
+done locally - the challenge has standard floating-point math, so C can be used for speed. 
+E.g., to break p,q=3,7 using at least 500 ciphertexts, you would run
+
+  sol_freqs 3 7 1000000 > freqs-3-7.dat
+  python3 sol.py 500 3 7 freqs-3-7.dat
+
+Even quicker if you use p,q = 3,2 - you almost never need a shift then outside the +-5 sec 
+window, plus even fewer encryptions suffice:
+
+  sol_freqs 3 2 1000000 > freqs-3-2.dat
+  python3 sol.py 250 3 2 freqs-3-2.dat
+
+The flag was purposefully chosen such that almost no characters repeat.
+[  bctf{Oo0ps,_b3T_My_PrOBlEm'S_no7_eN0Ugh_RoUnd5_#*!&%*?$}  ]
+
+==
+
+Alternatively, you could probably just bruteforce the keyspace using a mesh of O(few thousand) 
+keys for A and the same for B, and get the flag from a few encryptions...
+
+D>
